@@ -7,6 +7,9 @@ export const environment = {
   production: false,
   useHash: true,
   hmr: true,
+  contextPath: {
+    api: '/api',
+  },
 };
 
 /*

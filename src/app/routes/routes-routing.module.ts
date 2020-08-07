@@ -27,6 +27,7 @@ const routes: Routes = [
     canActivate: [SimpleGuard],
     canActivateChild: [SimpleGuard],
     children: [
+      { path: '', redirectTo: 'index', pathMatch: 'full' },
       { path: 'index', component: PageIndexComponent },
       // { path: '', redirectTo: 'dashboard/v1', pathMatch: 'full' },
       // { path: 'dashboard', redirectTo: 'dashboard/v1', pathMatch: 'full' },
