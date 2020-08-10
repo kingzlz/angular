@@ -1,0 +1,30 @@
+<div class="modal-header">
+  <div class="modal-title">请上传文件</div>
+</div>
+<nz-alert nzType="info" [nzMessage]="headerMsg" nzShowIcon style="margin-bottom: 16px"></nz-alert>
+<form nz-form>
+  <nz-form-item>
+    <nz-form-control>
+      <nz-upload [(nzFileList)]="fileList" [nzBeforeUpload]="beforeUpload()" id="name" name="name"
+        [nzAccept]="acceptFormat" [nzAction]="uploadUrl" nzName="multipartFile" [nzData]="uploadParams"
+        [nzMultiple]="true" nzLimit="1" nzType="drag" (nzChange)="onChange($event)">
+        <p class="ant-upload-drag-icon">
+          <i nz-icon nzType="inbox"></i>
+        </p>
+        <p class="ant-upload-text">点击或将文件拖拽到这里上传</p>
+        <!--        <p class="ant-upload-hint">-->
+        <!--          Support for a single or bulk upload. Strictly prohibit from uploading company data or other band files-->
+        <!--        </p>-->
+        <!-- <button nz-button>
+          <i nz-icon nzType="upload"></i><span>选择文件</span>
+        </button> -->
+      </nz-upload>
+    </nz-form-control>
+  </nz-form-item>
+
+</form>
+<div class="modal-footer">
+  <button nz-button type="button" (click)="close()">取消</button>
+  <button nz-button type="button" nzType="primary" (click)="save()" [disabled]="fileAva" [nzLoading]="http.loading">确认
+  </button>
+</div>
