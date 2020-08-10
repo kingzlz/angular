@@ -1,0 +1,9 @@
+<page-header>
+</page-header>
+<nz-card>
+  <div class="options">
+    <button (click)="add()" nz-button nzType="primary">
+      <i nz-icon nzType="plus"></i>新增</button>
+  </div>
+  <st #st [data]="url" [columns]="columns" [res]="resConfig" [req]="reqConfig" [page]="page"></st>
+</nz-card>

@@ -43,6 +43,10 @@ const routes: Routes = [
       { path: 'delon', loadChildren: () => import('./delon/delon.module').then((m) => m.DelonModule) },
       { path: 'extras', loadChildren: () => import('./extras/extras.module').then((m) => m.ExtrasModule) },
       { path: 'pro', loadChildren: () => import('./pro/pro.module').then((m) => m.ProModule) },
+      { path: 'menu', loadChildren: () => import('./menu/menu.module').then((m) => m.MenuModule) },
+      { path: 'user', loadChildren: () => import('./users/users.module').then((m) => m.UsersModule) },
+      { path: 'video', loadChildren: () => import('./video/video.module').then((m) => m.VideoModule) },
+      { path: 'file', loadChildren: () => import('./files/files.module').then((m) => m.FilesModule) },
       // Exception
       { path: 'exception', loadChildren: () => import('./exception/exception.module').then((m) => m.ExceptionModule) },
     ],
