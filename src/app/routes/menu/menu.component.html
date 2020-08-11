@@ -6,4 +6,32 @@
       <i nz-icon nzType="plus"></i>新增</button>
   </div>
   <st #st [data]="url" [columns]="columns" [res]="resConfig" [req]="reqConfig" [page]="page"></st>
+
+  <!-- <nz-table #expandTable [nzData]="data" nzTableLayout="fixed">
+    <thead>
+      <tr>
+        <th>导航</th>
+        <th>图标</th>
+        <th>路由</th>
+        <th>排序</th>
+        <th>操作</th>
+      </tr>
+    </thead>
+    <tbody>
+      <ng-container *ngFor="let data of expandTable.data">
+        <ng-container *ngFor="let item of mapOfExpandedData[data.pid]">
+          <tr *ngIf="(item.parent && item.parent.expand) || !item.parent">
+            <td [nzIndentSize]="item.level! * 20" [nzShowExpand]="!!item.children" [(nzExpand)]="item.expand"
+              (nzExpandChange)="collapse(mapOfExpandedData[data.pid], item, $event)">
+              {{ item.text }}
+            </td>
+            <td>{{ item.icon }}</td>
+            <td>{{ item.link }}</td>
+            <td>{{ item.sort }}</td>
+            <td>删除</td>
+          </tr>
+        </ng-container>
+      </ng-container>
+    </tbody>
+  </nz-table> -->
 </nz-card>

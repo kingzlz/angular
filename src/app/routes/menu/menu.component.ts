@@ -2,7 +2,7 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import { STColumn, STComponent, STPage, STReq, STRes } from '@delon/abc/st';
 import { ModalHelper } from '@delon/theme';
 import { AddComponent } from './add-dialog/add-dialog.component';
-import { MenuService } from './menu.service';
+import { MenuModel, MenuService } from './menu.service';
 
 @Component({
   selector: 'app-menu',
@@ -51,12 +51,19 @@ export class MenuComponent implements OnInit {
       ],
     },
   ];
-
+  mapOfExpandedData: { [key: string]: MenuModel[] } = {};
   /** internal */
   @ViewChild('st', { static: true }) st: STComponent;
   constructor(private modelService: ModalHelper, private service: MenuService) {}
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    // this.service.getMenus().subscribe((res) => {
+    //   this.data = res;
+    //   this.data.forEach((item) => {
+    //     this.mapOfExpandedData[item.pid] = this.convertTreeToList(item);
+    //   });
+    // });
+  }
   add(): void {
     this.modelService.create(AddComponent, null, { size: 'md' }).subscribe(() => this.st.reload());
   }
@@ -65,5 +72,46 @@ export class MenuComponent implements OnInit {
     this.service.delMunu(id).subscribe((res) => {
       this.st.reload();
     });
+  }
+  convertTreeToList(root: MenuModel): MenuModel[] {
+    const stack: MenuModel[] = [];
+    const array: MenuModel[] = [];
+    const hashMap = {};
+    stack.push({ ...root, level: 0, expand: false });
+
+    while (stack.length !== 0) {
+      // tslint:disable-next-line: no-non-null-assertion
+      const node = stack.pop()!;
+      this.visitNode(node, hashMap, array);
+      if (node.children) {
+        for (let i = node.children.length - 1; i >= 0; i--) {
+          // tslint:disable-next-line: no-non-null-assertion
+          stack.push({ ...node.children[i], level: node.level! + 1, expand: false, parent: node });
+        }
+      }
+    }
+
+    return array;
+  }
+
+  visitNode(node: MenuModel, hashMap: { [key: string]: boolean }, array: MenuModel[]): void {
+    if (!hashMap[node.pid]) {
+      hashMap[node.pid] = true;
+      array.push(node);
+    }
+  }
+  collapse(array: MenuModel[], data: MenuModel, $event: boolean): void {
+    if (!$event) {
+      if (data.children) {
+        data.children.forEach((d) => {
+          // tslint:disable-next-line: no-non-null-assertion
+          const target = array.find((a) => a.pid === d.pid)!;
+          target.expand = false;
+          this.collapse(array, target, false);
+        });
+      } else {
+        return;
+      }
+    }
   }
 }

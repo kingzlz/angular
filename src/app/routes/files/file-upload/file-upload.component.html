@@ -6,8 +6,8 @@
   <nz-form-item>
     <nz-form-control>
       <nz-upload [(nzFileList)]="fileList" [nzBeforeUpload]="beforeUpload()" id="name" name="name"
-        [nzAccept]="acceptFormat" [nzAction]="uploadUrl" nzName="multipartFile" [nzData]="uploadParams"
-        [nzMultiple]="true" nzLimit="1" nzType="drag" (nzChange)="onChange($event)">
+        [nzAccept]="acceptFormat" [nzAction]="uploadUrl" nzName="multipartFile" [nzData]="uploadParams" nzType="drag"
+        (nzChange)="onChange($event)">
         <p class="ant-upload-drag-icon">
           <i nz-icon nzType="inbox"></i>
         </p>

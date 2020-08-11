@@ -1,6 +1,6 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { STColumn, STComponent, STPage, STReq, STRes } from '@delon/abc/st';
-import { ModalHelper } from '@delon/theme';
+import { ModalHelper, _HttpClient } from '@delon/theme';
 import { FileUploadComponent } from './file-upload/file-upload.component';
 
 @Component({
@@ -54,12 +54,17 @@ export class FilesComponent implements OnInit {
 
   /** internal */
   @ViewChild('st', { static: true }) st: STComponent;
-  constructor(private modelService: ModalHelper) {}
+  constructor(private modelService: ModalHelper, private http: _HttpClient) {}
 
   ngOnInit(): void {}
   upload(): void {
     this.modelService.create(FileUploadComponent, null, { size: 'md' }).subscribe(() => this.st.reload());
   }
 
-  del(id: string): void {}
+  del(id: string): void {
+    this.http.delete(`${this.url}/${id}`).subscribe((res) => {
+      console.log(res);
+      this.st.reload();
+    });
+  }
 }
