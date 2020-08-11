@@ -26,7 +26,7 @@ export class FileUploadComponent implements OnInit {
   constructor(private modal: NzModalRef, private msgSrv: NzMessageService, public http: _HttpClient, public settings: SettingsService) {}
 
   // 文件可上传格式，如[.xls,.jpg]
-  @Input() acceptFormat = ['.png'];
+  @Input() acceptFormat = ['.png', '.jpg', '.jpeg', '.gif'];
   @Input() businessId;
   @Input() moduleId;
 

@@ -1,7 +1,7 @@
 import { ChangeDetectionStrategy, Component, Inject } from '@angular/core';
 import { Router } from '@angular/router';
 import { DA_SERVICE_TOKEN, ITokenService } from '@delon/auth';
-import { SettingsService, User } from '@delon/theme';
+import { SettingsService, User, _HttpClient } from '@delon/theme';
 
 @Component({
   selector: 'header-user',
@@ -32,17 +32,24 @@ import { SettingsService, User } from '@delon/theme';
       </div>
     </nz-dropdown-menu>
   `,
-  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class HeaderUserComponent {
   get user(): User {
     return this.settings.user;
   }
 
-  constructor(private settings: SettingsService, private router: Router, @Inject(DA_SERVICE_TOKEN) private tokenService: ITokenService) {}
+  constructor(
+    private settings: SettingsService,
+    private router: Router,
+    @Inject(DA_SERVICE_TOKEN) private tokenService: ITokenService,
+    private http: _HttpClient,
+  ) {}
 
   logout(): void {
-    this.tokenService.clear();
-    this.router.navigateByUrl(this.tokenService.login_url);
+    this.http.post('api/logout').subscribe(() => {
+      this.tokenService.clear();
+      localStorage.clear();
+      this.router.navigateByUrl(this.tokenService.login_url);
+    });
   }
 }
