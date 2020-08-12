@@ -1,5 +1,10 @@
-<p>video-list works!</p>
-<div>
-  123
-  <st #st [data]="url" [columns]="columns"></st>
-</div>
+<page-header>
+</page-header>
+<nz-card>
+  <video id="video" #video width="500" height="400" autoplay></video>
+  <canvas id="canvas" #canvas></canvas>
+  <button nz-button (click)="start()">开始</button>
+  <button nz-button (click)="proCapture()">拍照</button>
+  <button nz-button (click)="close()">关闭</button>
+  <button nz-button (click)="upload()">上传</button>
+</nz-card>
