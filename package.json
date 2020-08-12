@@ -71,6 +71,7 @@
     "ngx-ueditor": "^10.0.0",
     "ngx-countdown": "^10.0.0",
     "screenfull": "^5.0.2",
+    "font-awesome": "^4.7.0",
     "qrious": "^4.0.2"
   },
   "devDependencies": {

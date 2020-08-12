@@ -7,13 +7,13 @@ import { DelonFormModule } from '@delon/form';
 import { AlainThemeModule } from '@delon/theme';
 import { TranslateModule } from '@ngx-translate/core';
 
-import { SHARED_DELON_MODULES } from './shared-delon.module';
-import { SHARED_ZORRO_MODULES } from './shared-zorro.module';
-
 // #region third libs
 import { CountdownModule } from 'ngx-countdown';
 import { NgxTinymceModule } from 'ngx-tinymce';
 import { UEditorModule } from 'ngx-ueditor';
+import { ImageViewerModule } from './image-viewer/image-viewer.module';
+import { SHARED_DELON_MODULES } from './shared-delon.module';
+import { SHARED_ZORRO_MODULES } from './shared-zorro.module';
 
 const THIRDMODULES = [CountdownModule, UEditorModule, NgxTinymceModule];
 // #endregion
@@ -32,6 +32,7 @@ const DIRECTIVES = [];
     AlainThemeModule.forChild(),
     DelonACLModule,
     DelonFormModule,
+    ImageViewerModule.forRoot(),
     ...SHARED_DELON_MODULES,
     ...SHARED_ZORRO_MODULES,
     // third libs
@@ -51,6 +52,7 @@ const DIRECTIVES = [];
     DelonACLModule,
     DelonFormModule,
     TranslateModule,
+    ImageViewerModule,
     ...SHARED_DELON_MODULES,
     ...SHARED_ZORRO_MODULES,
     // third libs

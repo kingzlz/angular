@@ -23,18 +23,17 @@ export class FilesComponent implements OnInit {
       title: '文件名称',
       index: 'fileName',
     },
-
     {
-      type: 'img',
-      width: 60,
+      title: '图片',
+      render: 'custom',
       index: 'fileUrl',
-      exported: false,
-      title: '路径',
+      width: 150,
     },
-
     {
       title: '创建时间',
       index: 'createdAt',
+      type: 'date',
+      dateFormat: 'yyyy-MM-dd HH:mm:ss',
     },
 
     {
@@ -51,7 +50,9 @@ export class FilesComponent implements OnInit {
       ],
     },
   ];
-
+  imageFullscreenView = false;
+  images = [];
+  imageIndexOne = 0;
   /** internal */
   @ViewChild('st', { static: true }) st: STComponent;
   constructor(private modelService: ModalHelper, private http: _HttpClient) {}
@@ -66,5 +67,10 @@ export class FilesComponent implements OnInit {
       console.log(res);
       this.st.reload();
     });
+  }
+
+  show(item: any): void {
+    this.images = [item.fileUrl];
+    this.imageFullscreenView = true;
   }
 }

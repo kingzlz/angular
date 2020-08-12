@@ -5,5 +5,12 @@
     <button (click)="upload()" nz-button nzType="primary">
       <i nz-icon nzType="plus"></i>上传文件</button>
   </div>
-  <st #st [data]="url" [columns]="columns" [res]="resConfig" [req]="reqConfig" [page]="page"></st>
+  <st #st [data]="url" [columns]="columns" [res]="resConfig" [req]="reqConfig" [page]="page">
+    <ng-template st-row="custom" let-c>
+      <img class="image" [src]="c.fileUrl" width="100" (click)="show(c)">
+    </ng-template>
+  </st>
 </nz-card>
+<app-bt-image-viewer *ngIf="imageFullscreenView" [src]="images"
+  (closeEvent)="imageFullscreenView = $event; imageIndexOne = 0" [(index)]="imageIndexOne">
+</app-bt-image-viewer>
