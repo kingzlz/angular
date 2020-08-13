@@ -1,8 +1,8 @@
 import { NgModule } from '@angular/core';
 import { SharedModule } from '@shared';
+import { VideoListComponent } from './video-list/video-list.component';
 import { VideoRoutingModule } from './video-routing.module';
 import { VideoComponent } from './video.component';
-import { VideoListComponent } from './video-list/video-list.component';
 
 const COMPONENTS = [VideoComponent];
 const COMPONENTS_NOROUNT = [];

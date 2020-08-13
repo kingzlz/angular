@@ -8,6 +8,7 @@ import { ExceptionModule } from '@delon/abc/exception';
 import { FooterToolbarModule } from '@delon/abc/footer-toolbar';
 import { FullContentModule } from '@delon/abc/full-content';
 import { GlobalFooterModule } from '@delon/abc/global-footer';
+import { MediaModule } from '@delon/abc/media';
 import { NoticeIconModule } from '@delon/abc/notice-icon';
 import { NumberToChineseModule } from '@delon/abc/number-to-chinese';
 import { OnboardingModule } from '@delon/abc/onboarding';
@@ -74,5 +75,6 @@ export const SHARED_DELON_MODULES = [
   NumberInfoModule,
   TrendModule,
   FullContentModule,
+  MediaModule,
   // ReuseTabModule,
 ];

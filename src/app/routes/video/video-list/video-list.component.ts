@@ -1,5 +1,8 @@
 import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { STColumn, STComponent } from '@delon/abc/st';
+import { _HttpClient } from '@delon/theme';
+import { NzMessageService } from 'ng-zorro-antd/message';
+import { map } from 'rxjs/operators';
 
 @Component({
   selector: 'app-video-list',
@@ -13,7 +16,7 @@ export class VideoListComponent implements OnInit {
   videoEl: HTMLVideoElement;
   context: any;
   mediaStreamTrack: any;
-  constructor() {}
+  constructor(private http: _HttpClient, private msgSrv: NzMessageService) {}
 
   ngOnInit(): void {
     this.canvasEl = this.canvas.nativeElement;
@@ -64,12 +67,29 @@ export class VideoListComponent implements OnInit {
   proCapture(): void {
     this.context.drawImage(this.videoEl, 0, 0, 500, 400);
   }
+
   close(): void {
     // tslint:disable-next-line: no-unused-expression
     this.mediaStreamTrack && this.mediaStreamTrack.stop();
   }
+
   upload(): void {
     const data = this.canvasEl.toDataURL('image/png');
-    console.log(data);
+    this.http
+      .post('api/file/upload/base64', { fileName: `${this.uuid()}.png`, image64: data })
+      .pipe(map((res) => res))
+      .subscribe(({ fileName, fileUrl }) => {
+        this.http.post('api/file/list', { fileName, fileUrl }).subscribe(() => {
+          this.msgSrv.success('保存成功');
+        });
+      });
+  }
+
+  uuid(): string {
+    return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, (c) => {
+      const r = (Math.random() * 16) | 0,
+        v = c == 'x' ? r : (r & 0x3) | 0x8;
+      return v.toString(16);
+    });
   }
 }
