@@ -1,4 +1,4 @@
-import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
+import { Component, ElementRef, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { STColumn, STComponent } from '@delon/abc/st';
 import { _HttpClient } from '@delon/theme';
 import { NzMessageService } from 'ng-zorro-antd/message';
@@ -9,7 +9,7 @@ import { map } from 'rxjs/operators';
   templateUrl: './video-list.component.html',
   styleUrls: ['./video-list.component.less'],
 })
-export class VideoListComponent implements OnInit {
+export class VideoListComponent implements OnInit, OnDestroy {
   @ViewChild('canvas', { static: true }) canvas: ElementRef;
   @ViewChild('video', { static: true }) video: ElementRef;
   canvasEl: HTMLCanvasElement;
@@ -23,6 +23,11 @@ export class VideoListComponent implements OnInit {
     this.videoEl = this.video.nativeElement;
     this.context = this.canvasEl.getContext('2d');
   }
+
+  ngOnDestroy(): void {
+    this.close();
+  }
+
   start(): void {
     (window.navigator as any).getMedia =
       navigator.getUserMedia ||
@@ -65,7 +70,9 @@ export class VideoListComponent implements OnInit {
   }
   // 拍照
   proCapture(): void {
-    this.context.drawImage(this.videoEl, 0, 0, 500, 400);
+    console.log(this.videoEl);
+
+    this.context.drawImage(this.videoEl, 0, 0, 300, 170);
   }
 
   close(): void {

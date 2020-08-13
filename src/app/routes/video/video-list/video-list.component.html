@@ -1,10 +1,18 @@
 <page-header>
 </page-header>
 <nz-card>
-  <video id="video" #video width="500" height="400" autoplay></video>
-  <canvas id="canvas" #canvas></canvas>
-  <button nz-button (click)="start()">开始</button>
-  <button nz-button (click)="proCapture()">拍照</button>
-  <button nz-button (click)="close()">关闭</button>
-  <button nz-button (click)="upload()">上传</button>
+  <div nz-row nzGutter="0">
+    <div nz-col nzSpan="12">
+      <video id="video" #video width="499" height="375" autoplay></video>
+    </div>
+    <div nz-col nzSpan="12">
+      <canvas id="canvas" #canvas></canvas>
+      <button nzType="primary" nz-button (click)="start()">开始</button>
+      <button nz-button (click)="proCapture()">拍照</button>
+      <button nz-button (click)="close()">关闭</button>
+      <button nzType="primary" nz-button (click)="upload()">上传</button>
+    </div>
+  </div>
+
+
 </nz-card>

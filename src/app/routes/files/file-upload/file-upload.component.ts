@@ -82,21 +82,22 @@ export class FileUploadComponent implements OnInit {
       this.msgSrv.warning('文件上传中，请稍后再试');
       return;
     }
-    // const files = [];
-    let params: any = {};
+    const files = [];
+    const params: any = {};
     for (const file of this.fileList) {
       if (!file.error && file.status !== 'error') {
-        // files.push(file.response.data.fileId);
-        params = {
+        files.push({
           fileName: file.response.filename,
           fileUrl: file.response.url,
-        };
+        });
+        // params = {
+        //   fileName: file.response.filename,
+        //   fileUrl: file.response.url,
+        // };
       }
     }
 
-    console.log(params);
-    this.http.post('api/file/list', params).subscribe((res) => {
-      console.log(res);
+    this.http.post('api/file/bacth', files).subscribe((res) => {
       this.msgSrv.success(res.msg);
       this.modal.close(true);
     });
