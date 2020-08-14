@@ -112,6 +112,7 @@ export class ImageViewerComponent implements OnInit {
     this.updateStyle();
   }
 
+  // tslint:disable-next-line: typedef
   scrollZoom(evt) {
     if (this.config.wheelZoom) {
       evt.deltaY > 0 ? this.zoomOut() : this.zoomIn();
@@ -124,7 +125,7 @@ export class ImageViewerComponent implements OnInit {
     this.updateStyle();
   }
 
-  rotateCounterClockwise() {
+  rotateCounterClockwise(): void {
     this.rotation -= 90;
     this.updateStyle();
   }
