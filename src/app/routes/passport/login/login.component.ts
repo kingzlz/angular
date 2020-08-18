@@ -7,7 +7,9 @@ import { ReuseTabService } from '@delon/abc/reuse-tab';
 import { DA_SERVICE_TOKEN, ITokenService, SocialOpenType, SocialService } from '@delon/auth';
 import { SettingsService, _HttpClient } from '@delon/theme';
 import { environment } from '@env/environment';
+import { Store } from '@ngxs/store';
 import { NzMessageService } from 'ng-zorro-antd/message';
+import { Login } from '../../../store/actions/user.action';
 
 @Component({
   selector: 'passport-login',
@@ -36,7 +38,7 @@ export class UserLoginComponent implements OnDestroy, OnInit {
   form: FormGroup;
   error = '';
   type = 0;
-
+  loading = false;
   // #region get captcha
 
   count = 0;
@@ -56,6 +58,7 @@ export class UserLoginComponent implements OnDestroy, OnInit {
     public http: _HttpClient,
     public msg: NzMessageService,
     private doms: DomSanitizer,
+    private store$: Store,
   ) {
     this.form = fb.group({
       // userName: [null, [Validators.required, Validators.pattern(/^(admin|user)$/)]],
@@ -115,31 +118,41 @@ export class UserLoginComponent implements OnDestroy, OnInit {
         return;
       }
     }
+    this.loading = true;
+    this.store$.dispatch(new Login(this.userName.value, this.password.value, this.verify.value)).subscribe(
+      () => {
+        // this.router.navigateByUrl('/');
+      },
+      (err) => {
+        this.loading = false;
+        this.error = (err && err.message) || '';
+      },
+    );
 
     // 默认配置中对所有HTTP请求都会强制 [校验](https://ng-alain.com/auth/getting-started) 用户 Token
     // 然一般来说登录请求不需要校验，因此可以在请求URL加上：`/login?_allow_anonymous=true` 表示不触发用户 Token 校验
-    this.http
-      .post('api/login?_allow_anonymous=true', {
-        name: this.userName.value,
-        password: this.password.value,
-        verify: this.verify.value,
-      })
-      .subscribe(({ token }) => {
-        // 清空路由复用信息
-        this.reuseTabService.clear();
-        // 设置用户Token信息
-        // TODO: Mock expired value
-        // res.user.expired = +new Date() + 1000 * 60 * 5;
-        this.tokenService.set({ token });
-        // 重新获取 StartupService 内容，我们始终认为应用信息一般都会受当前用户授权范围而影响
-        this.startupSrv.load().then(() => {
-          // let url = this.tokenService.referrer.url || '/';
-          // if (url.includes('/passport')) {
-          //   url = '/';
-          // }
-          this.router.navigateByUrl('/index');
-        });
-      });
+    // this.http
+    //   .post('api/login?_allow_anonymous=true', {
+    //     name: this.userName.value,
+    //     password: this.password.value,
+    //     verify: this.verify.value,
+    //   })
+    //   .subscribe(({ token }) => {
+    //     // 清空路由复用信息
+    //     this.reuseTabService.clear();
+    //     // 设置用户Token信息
+    //     // TODO: Mock expired value
+    //     // res.user.expired = +new Date() + 1000 * 60 * 5;
+    //     this.tokenService.set({ token });
+    //     // 重新获取 StartupService 内容，我们始终认为应用信息一般都会受当前用户授权范围而影响
+    //     this.startupSrv.load().then(() => {
+    //       // let url = this.tokenService.referrer.url || '/';
+    //       // if (url.includes('/passport')) {
+    //       //   url = '/';
+    //       // }
+    //       this.router.navigateByUrl('/index');
+    //     });
+    //   });
   }
 
   // #region social

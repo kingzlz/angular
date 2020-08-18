@@ -4,11 +4,13 @@ import { ACLService } from '@delon/acl';
 import { DA_SERVICE_TOKEN, ITokenService } from '@delon/auth';
 import { ALAIN_I18N_TOKEN, MenuService, SettingsService, TitleService } from '@delon/theme';
 import { TranslateService } from '@ngx-translate/core';
+import { Store } from '@ngxs/store';
 import { NzIconService } from 'ng-zorro-antd/icon';
 import { zip } from 'rxjs';
 import { catchError } from 'rxjs/operators';
 import { ICONS } from '../../../style-icons';
 import { ICONS_AUTO } from '../../../style-icons-auto';
+import { Edit } from '../../store/actions/user.action';
 import { I18NService } from '../i18n/i18n.service';
 
 /**
@@ -27,6 +29,7 @@ export class StartupService {
     private titleService: TitleService,
     private httpClient: HttpClient,
     @Inject(DA_SERVICE_TOKEN) private tokenService: ITokenService,
+    private store$: Store,
   ) {
     iconSrv.addIcon(...ICONS_AUTO, ...ICONS);
   }
@@ -91,6 +94,7 @@ export class StartupService {
       .subscribe((infoData: { user: any; menu: any[] }) => {
         // 用户信息：包括姓名、头像、邮箱地址
         this.settingService.setUser(infoData.user);
+        this.store$.dispatch(new Edit(infoData.user));
         // 初始化菜单
         const rootMenus: any[] = [
           {

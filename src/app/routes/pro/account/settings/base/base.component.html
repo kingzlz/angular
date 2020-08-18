@@ -2,13 +2,16 @@
   <div class="main" *ngIf="user">
     <div class="left">
       <form nz-form nzLayout="vertical" #f="ngForm" (submit)="save()" se-container="1">
+        <se label="用户名" error="请输入您的用户名!">
+          <input nz-input [(ngModel)]="user.name" name="name" required />
+        </se>
+        <se label="昵称" error="请输入您的昵称!">
+          <input nz-input [(ngModel)]="user.nickName" name="nickName" required />
+        </se>
         <se label="邮箱" error="请输入您的邮箱!">
           <input nz-input type="email" [(ngModel)]="user.email" name="email" required />
         </se>
-        <se label="昵称" error="请输入您的昵称!">
-          <input nz-input [(ngModel)]="user.name" name="name" required />
-        </se>
-        <se label="个人简介">
+        <!--  <se label="个人简介">
           <textarea
             nz-input
             [(ngModel)]="user.profile"
@@ -17,7 +20,7 @@
             placeholder="个人简介"
           ></textarea>
         </se>
-        <se label="国家/地区">
+       <se label="国家/地区">
           <nz-select [(ngModel)]="user.country" name="country" required>
             <nz-option nzLabel="中国" nzValue="China"></nz-option>
           </nz-select>
@@ -40,7 +43,7 @@
         </se>
         <se label="街道地址" error="请输入您的街道地址!">
           <input nz-input [(ngModel)]="user.address" name="address" required />
-        </se>
+        </se> -->
         <se label="联系电话" error="请输入您的联系电话!">
           <input nz-input [(ngModel)]="user.phone" name="phone" required />
         </se>
@@ -52,7 +55,8 @@
     <div class="right">
       <div class="avatar_title">Avatar</div>
       <div class="avatar"><img src="{{ user.avatar }}" alt="Avatar" /></div>
-      <nz-upload nzAction="/user/avatar" [nzShowUploadList]="false">
+      <nz-upload nzAction="api/file/upload" [nzShowUploadList]="false" [nzPreview]="handlePreview"
+        (nzChange)="change($event)">
         <button nz-button class="button_view">
           <i nz-icon nzType="upload"></i>
           <span>更换头像</span>

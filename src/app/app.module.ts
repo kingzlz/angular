@@ -98,6 +98,7 @@ import { PageIndexComponent } from './routes/page-index/page-index.component';
 import { RoutesModule } from './routes/routes.module';
 import { SharedModule } from './shared/shared.module';
 import { STWidgetModule } from './shared/st-widget/st-widget.module';
+import { StoreModule } from './store/store.module';
 
 @NgModule({
   declarations: [AppComponent, PageIndexComponent],
@@ -111,6 +112,7 @@ import { STWidgetModule } from './shared/st-widget/st-widget.module';
     LayoutModule,
     RoutesModule,
     STWidgetModule,
+    StoreModule,
     ...I18NSERVICE_MODULES,
     ...GLOBAL_THIRD_MODULES,
     ...FORM_MODULES,

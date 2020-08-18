@@ -1,8 +1,9 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { STColumn, STComponent, STPage, STReq, STRes } from '@delon/abc/st';
 import { ModalHelper, _HttpClient } from '@delon/theme';
+import { debounceFn } from '@utils';
+import { NzModalService } from 'ng-zorro-antd/modal';
 import { FileUploadComponent } from './file-upload/file-upload.component';
-
 @Component({
   selector: 'app-files',
   templateUrl: './files.component.html',
@@ -55,13 +56,14 @@ export class FilesComponent implements OnInit {
   imageIndexOne = 0;
   /** internal */
   @ViewChild('st', { static: true }) st: STComponent;
-  constructor(private modelService: ModalHelper, private http: _HttpClient) {}
+  constructor(private modelService: ModalHelper, private http: _HttpClient, private modal: NzModalService) {}
 
   ngOnInit(): void {}
   upload(): void {
     this.modelService.create(FileUploadComponent, null, { size: 'md' }).subscribe(() => this.st.reload());
   }
 
+  @debounceFn(1000)
   del(id: string): void {
     this.http.delete(`${this.url}/${id}`).subscribe((res) => {
       console.log(res);

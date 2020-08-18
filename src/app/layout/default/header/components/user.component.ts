@@ -1,14 +1,20 @@
-import { ChangeDetectionStrategy, Component, Inject } from '@angular/core';
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component, Inject, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { DA_SERVICE_TOKEN, ITokenService } from '@delon/auth';
-import { SettingsService, User, _HttpClient } from '@delon/theme';
+import { SettingsService, _HttpClient } from '@delon/theme';
+import { Select, Store } from '@ngxs/store';
+import { Observable } from 'rxjs';
+import { User } from 'src/app/store/models/user.model';
+// tslint:disable-next-line: ordered-imports
+import { UserState } from 'src/app/store/states/user.state';
+import { Logout } from '../../../../store/actions/user.action';
 
 @Component({
   selector: 'header-user',
   template: `
     <div class="alain-default__nav-item d-flex align-items-center px-sm" nz-dropdown nzPlacement="bottomRight" [nzDropdownMenu]="userMenu">
-      <nz-avatar [nzSrc]="user.avatar" nzSize="small" class="mr-sm"></nz-avatar>
-      {{ user.name }}
+      <nz-avatar [nzSrc]="user?.avatar" nzSize="small" class="mr-sm"></nz-avatar>
+      {{ user?.nickName }}
     </div>
     <nz-dropdown-menu #userMenu="nzDropdownMenu">
       <div nz-menu class="width-sm">
@@ -32,24 +38,23 @@ import { SettingsService, User, _HttpClient } from '@delon/theme';
       </div>
     </nz-dropdown-menu>
   `,
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class HeaderUserComponent {
-  get user(): User {
-    return this.settings.user;
+export class HeaderUserComponent implements OnInit {
+  user: User;
+  // 1.在component中订阅userInfo状态
+  @Select(UserState.getLoginUser) userInfo$: Observable<User>;
+
+  constructor(private store$: Store, private cdr: ChangeDetectorRef) {}
+
+  ngOnInit(): void {
+    this.userInfo$.subscribe((userInfo: User) => {
+      this.user = userInfo;
+      this.cdr.detectChanges();
+    });
   }
 
-  constructor(
-    private settings: SettingsService,
-    private router: Router,
-    @Inject(DA_SERVICE_TOKEN) private tokenService: ITokenService,
-    private http: _HttpClient,
-  ) {}
-
   logout(): void {
-    this.http.post('api/logout').subscribe(() => {
-      this.tokenService.clear();
-      localStorage.clear();
-      this.router.navigateByUrl(this.tokenService.login_url);
-    });
+    this.store$.dispatch(new Logout());
   }
 }
