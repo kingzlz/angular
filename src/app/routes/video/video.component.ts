@@ -195,12 +195,9 @@ export class VideoComponent implements OnInit {
   constructor() {}
 
   ngOnInit(): void {
-    this.menu.forEach((item) => {
-      console.log(item);
-
-      this.mapOfExpandedData[item._id] = this.convertTreeToList(item);
-    });
-    console.log(this.mapOfExpandedData);
+    // this.menu.forEach((item) => {
+    //   this.mapOfExpandedData[item._id] = this.convertTreeToList(item);
+    // });
   }
   collapse(array: TreeNodeInterface[], data: TreeNodeInterface, $event: boolean): void {
     if (!$event) {
