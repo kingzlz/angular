@@ -3,11 +3,11 @@
 <nz-card>
   <div class="options">
     <button (click)="add()" nz-button nzType="primary">
-      <i nz-icon nzType="plus"></i>新增</button>
+      <i nz-icon nzType="plus"></i>新增一级菜单</button>
   </div>
-  <st #st [data]="url" [columns]="columns" [res]="resConfig" [req]="reqConfig" [page]="page"></st>
+  <!-- <st #st [data]="url" [columns]="columns" [res]="resConfig" [req]="reqConfig" [page]="page"></st> -->
 
-  <!-- <nz-table #expandTable [nzData]="data" nzTableLayout="fixed">
+  <nz-table #expandTable [nzData]="data" nzTableLayout="fixed">
     <thead>
       <tr>
         <th>导航</th>
@@ -19,19 +19,22 @@
     </thead>
     <tbody>
       <ng-container *ngFor="let data of expandTable.data">
-        <ng-container *ngFor="let item of mapOfExpandedData[data.pid]">
+        <ng-container *ngFor="let item of mapOfExpandedData[data._id]">
           <tr *ngIf="(item.parent && item.parent.expand) || !item.parent">
-            <td [nzIndentSize]="item.level! * 20" [nzShowExpand]="!!item.children" [(nzExpand)]="item.expand"
-              (nzExpandChange)="collapse(mapOfExpandedData[data.pid], item, $event)">
+            <td [nzIndentSize]="item.level! * 20" [nzShowExpand]="item.children.length > 0" [(nzExpand)]="item.expand"
+              (nzExpandChange)="collapse(mapOfExpandedData[data._id], item, $event)">
               {{ item.text }}
             </td>
             <td>{{ item.icon }}</td>
             <td>{{ item.link }}</td>
             <td>{{ item.sort }}</td>
-            <td>删除</td>
+            <td>
+              <a href="javascript:void(0)" (click)="del(item._id)">删除</a>&nbsp;&nbsp;&nbsp;&nbsp;
+              <a href="javascript:void(0)" (click)="addChildren(item._id)">添加子菜单</a>
+            </td>
           </tr>
         </ng-container>
       </ng-container>
     </tbody>
-  </nz-table> -->
+  </nz-table>
 </nz-card>

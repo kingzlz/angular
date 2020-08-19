@@ -3,7 +3,22 @@ import { STColumn, STComponent, STPage, STReq, STRes } from '@delon/abc/st';
 import { ModalHelper } from '@delon/theme';
 import { AddComponent } from './add-dialog/add-dialog.component';
 import { MenuModel, MenuService } from './menu.service';
-
+export interface TreeNodeInterface {
+  key?: string;
+  name?: string;
+  level?: number;
+  expand?: boolean;
+  address?: string;
+  children?: TreeNodeInterface[];
+  parent?: TreeNodeInterface;
+  _id?: string;
+  pid?: string;
+  group?: boolean;
+  hideInBreadcrumb?: boolean;
+  link?: string;
+  text?: string;
+  icon?: string;
+}
 @Component({
   selector: 'app-menu',
   templateUrl: './menu.component.html',
@@ -51,21 +66,25 @@ export class MenuComponent implements OnInit {
       ],
     },
   ];
-  mapOfExpandedData: { [key: string]: MenuModel[] } = {};
+  mapOfExpandedData: { [key: string]: TreeNodeInterface[] } = {};
   /** internal */
   @ViewChild('st', { static: true }) st: STComponent;
   constructor(private modelService: ModalHelper, private service: MenuService) {}
 
   ngOnInit(): void {
-    // this.service.getMenus().subscribe((res) => {
-    //   this.data = res;
-    //   this.data.forEach((item) => {
-    //     this.mapOfExpandedData[item.pid] = this.convertTreeToList(item);
-    //   });
-    // });
+    this.service.getMenus().subscribe((res) => {
+      this.data = res;
+      this.data.forEach((item) => {
+        this.mapOfExpandedData[item._id] = this.convertTreeToList(item);
+      });
+    });
   }
   add(): void {
     this.modelService.create(AddComponent, null, { size: 'md' }).subscribe(() => this.st.reload());
+  }
+
+  addChildren(pid: string): void {
+    this.modelService.create(AddComponent, { pid }, { size: 'md' }).subscribe(() => this.st.reload());
   }
 
   del(id: string): void {
@@ -73,9 +92,25 @@ export class MenuComponent implements OnInit {
       this.st.reload();
     });
   }
-  convertTreeToList(root: MenuModel): MenuModel[] {
-    const stack: MenuModel[] = [];
-    const array: MenuModel[] = [];
+
+  collapse(array: TreeNodeInterface[], data: TreeNodeInterface, $event: boolean): void {
+    if (!$event) {
+      if (data.children) {
+        data.children.forEach((d) => {
+          // tslint:disable-next-line: no-non-null-assertion
+          const target = array.find((a) => a._id === d._id)!;
+          target.expand = false;
+          this.collapse(array, target, false);
+        });
+      } else {
+        return;
+      }
+    }
+  }
+
+  convertTreeToList(root: TreeNodeInterface): TreeNodeInterface[] {
+    const stack: TreeNodeInterface[] = [];
+    const array: TreeNodeInterface[] = [];
     const hashMap = {};
     stack.push({ ...root, level: 0, expand: false });
 
@@ -94,24 +129,10 @@ export class MenuComponent implements OnInit {
     return array;
   }
 
-  visitNode(node: MenuModel, hashMap: { [key: string]: boolean }, array: MenuModel[]): void {
-    if (!hashMap[node.pid]) {
-      hashMap[node.pid] = true;
+  visitNode(node: TreeNodeInterface, hashMap: { [_id: string]: boolean }, array: TreeNodeInterface[]): void {
+    if (!hashMap[node._id]) {
+      hashMap[node._id] = true;
       array.push(node);
-    }
-  }
-  collapse(array: MenuModel[], data: MenuModel, $event: boolean): void {
-    if (!$event) {
-      if (data.children) {
-        data.children.forEach((d) => {
-          // tslint:disable-next-line: no-non-null-assertion
-          const target = array.find((a) => a.pid === d.pid)!;
-          target.expand = false;
-          this.collapse(array, target, false);
-        });
-      } else {
-        return;
-      }
     }
   }
 }

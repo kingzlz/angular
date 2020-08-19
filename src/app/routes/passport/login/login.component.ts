@@ -121,7 +121,7 @@ export class UserLoginComponent implements OnDestroy, OnInit {
     this.loading = true;
     this.store$.dispatch(new Login(this.userName.value, this.password.value, this.verify.value)).subscribe(
       () => {
-        // this.router.navigateByUrl('/');
+        this.loading = false;
       },
       (err) => {
         this.loading = false;

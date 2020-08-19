@@ -7,7 +7,7 @@
       "/api/": "/"
     }
   },
-  "/public/": { // 静态资源代理(主要为图片)
+  "/public/": {
     "target": "http://172.16.41.147:7001",
     "secure": false,
     "changeOrigin": true

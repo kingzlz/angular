@@ -126,7 +126,6 @@ export class ProAccountSettingsBaseComponent implements OnInit {
   }
 
   change(args: NzUploadChangeParam): void {
-    console.log(args);
     if (args.type !== 'success') {
       return;
     }

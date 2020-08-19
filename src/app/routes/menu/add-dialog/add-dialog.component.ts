@@ -14,7 +14,7 @@ import { MenuService } from '../menu.service';
 export class AddComponent implements OnInit, OnDestroy {
   title = '新增';
   record: any = {};
-  @Input() formatData: any = {};
+  @Input() pid: string;
   @Input() operation: string;
   @ViewChild('sf', { static: true }) sf: SFComponent;
   @ViewChild('input', { static: true }) searchInput: any;
@@ -91,6 +91,9 @@ export class AddComponent implements OnInit, OnDestroy {
 
   save(value: any): void {
     const params = { ...value };
+    if (this.pid) {
+      Object.assign(params, { pid: this.pid });
+    }
     this.service.addMenu(params).subscribe((res) => {
       this.msgSrv.success('新增成功');
       this.modal.close(true);
