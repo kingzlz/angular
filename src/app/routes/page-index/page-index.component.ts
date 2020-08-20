@@ -11,6 +11,9 @@ import { Component, OnInit } from '@angular/core';
         margin-top: 15%;
         text-align: center;
       }
+      .index-img {
+        margin-top: 30px;
+      }
     `,
   ],
 })
