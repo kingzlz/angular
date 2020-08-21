@@ -9,15 +9,7 @@
 <div align="center">
   Out-of-box UI solution for enterprise applications, Let developers focus on business.
 
-  [![Build Status](https://dev.azure.com/ng-alain/ng-alain/_apis/build/status/ng-alain-CI?branchName=master)](https://dev.azure.com/ng-alain/ng-alain/_build/latest?definitionId=2&branchName=master)
-  [![Dependency Status](https://david-dm.org/ng-alain/ng-alain/status.svg?style=flat-square)](https://david-dm.org/ng-alain/ng-alain)
-  [![GitHub Release Date](https://img.shields.io/github/release-date/ng-alain/ng-alain.svg?style=flat-square)](https://github.com/ng-alain/ng-alain/releases)
-  [![NPM version](https://img.shields.io/npm/v/ng-alain.svg?style=flat-square)](https://www.npmjs.com/package/ng-alain)
-  [![prettier](https://img.shields.io/badge/code_style-prettier-ff69b4.svg?style=flat-square)](https://prettier.io/)
-  [![GitHub license](https://img.shields.io/github/license/mashape/apistatus.svg?style=flat-square)](https://github.com/ng-alain/ng-alain/blob/master/LICENSE)
-  [![Gitter](https://img.shields.io/gitter/room/ng-alain/ng-alain.svg?style=flat-square)](https://gitter.im/ng-alain/ng-alain)
-  [![ng-zorro-vscode](https://img.shields.io/badge/ng--zorro-VSCODE-brightgreen.svg?style=flat-square)](https://marketplace.visualstudio.com/items?itemName=cipchk.ng-zorro-vscode)
-  [![ng-alain-vscode](https://img.shields.io/badge/ng--alain-VSCODE-brightgreen.svg?style=flat-square)](https://marketplace.visualstudio.com/items?itemName=cipchk.ng-alain-vscode)
+  
 
 </div>
 
@@ -53,19 +45,7 @@ English | [简体中文](README-zh_CN.md)
 
 > [delon](https://github.com/ng-alain/delon) is a production-ready solution for admin business components packages, Built on the design principles developed by Ant Design.
 
-## App Shots
 
-![desktop](https://raw.githubusercontent.com/ng-alain/delon/master/_screenshot/desktop.png)
-![ipad](https://raw.githubusercontent.com/ng-alain/delon/master/_screenshot/ipad.png)
-![iphone](https://raw.githubusercontent.com/ng-alain/delon/master/_screenshot/iphone.png)
-
-## Contributing
-
-[![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg?style=flat-square)](https://github.com/ng-alain/ng-alain/pulls)
-
-We welcome all contributions. Please read our [CONTRIBUTING.md](https://github.com/ng-alain/ng-alain/blob/master/CONTRIBUTING.md) first. You can submit any ideas as [pull requests](https://github.com/ng-alain/ng-alain/pulls) or as [GitHub issues](https://github.com/ng-alain/ng-alain/issues).
-
-> If you're new to posting issues, we ask that you read [*How To Ask Questions The Smart Way*](http://www.catb.org/~esr/faqs/smart-questions.html) (**This guide does not provide actual support services for this project!**), [How to Ask a Question in Open Source Community](https://github.com/seajs/seajs/issues/545) and [How to Report Bugs Effectively](http://www.chiark.greenend.org.uk/~sgtatham/bugs.html) prior to posting. Well written bug reports help us help you!
 
 ## Donation
 
@@ -78,6 +58,5 @@ ng-alain is an MIT-licensed open source project. In order to achieve better and 
 
 Or purchasing our [business theme](https://e.ng-alain.com/).
 
-### License
-
-The MIT License (see the [LICENSE](https://github.com/ng-alain/ng-alain/blob/master/LICENSE) file for the full text)
+#### 拍照上传时
+前端将base64格式传给后台,后台用node.js Buffer.from转为流存为图片

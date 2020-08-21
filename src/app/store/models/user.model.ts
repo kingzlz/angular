@@ -6,4 +6,7 @@ export class User {
   nickName: string;
   email: string;
   avatar: string;
+  createdAt?: string;
+  updatedAt?: string;
+  area: string | string[];
 }

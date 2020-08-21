@@ -1,10 +1,11 @@
 import { ChangeDetectionStrategy, ChangeDetectorRef, Component, Inject, Injector, OnInit } from '@angular/core';
+import { SFCascaderWidgetSchema, SFSchema } from '@delon/form';
 import { _HttpClient } from '@delon/theme';
 import { Select, Store } from '@ngxs/store';
 import { NzMessageService } from 'ng-zorro-antd/message';
 import { NzModalService } from 'ng-zorro-antd/modal';
 import { NzUploadChangeParam, NzUploadFile } from 'ng-zorro-antd/upload';
-import { Observable, zip } from 'rxjs';
+import { forkJoin, Observable, zip } from 'rxjs';
 import { User } from 'src/app/store/models/user.model';
 import { UserState } from 'src/app/store/states/user.state';
 import { Edit } from '../../../../../store/actions/user.action';
@@ -40,7 +41,7 @@ interface ProAccountSettingsCity {
   selector: 'app-account-settings-base',
   templateUrl: './base.component.html',
   styleUrls: ['./base.component.less'],
-  changeDetection: ChangeDetectionStrategy.OnPush,
+  changeDetection: ChangeDetectionStrategy.Default,
 })
 export class ProAccountSettingsBaseComponent implements OnInit {
   constructor(
@@ -53,10 +54,17 @@ export class ProAccountSettingsBaseComponent implements OnInit {
   avatar = '';
   userLoading = true;
   user: ProAccountSettingsUser;
+  formData: User;
+  city = [];
   uid: string;
-
+  schema: SFSchema = {};
   // #region geo
-
+  ui = {
+    '*': {
+      spanLabelFixed: 100,
+      // grid: { span: 8 },
+    },
+  };
   @Select(UserState.getLoginUser) userInfo$: Observable<User>;
   provinces: ProAccountSettingsCity[] = [];
   cities: ProAccountSettingsCity[] = [];
@@ -80,15 +88,59 @@ export class ProAccountSettingsBaseComponent implements OnInit {
   };
 
   ngOnInit(): void {
-    this.userInfo$.subscribe((info: ProAccountSettingsUser) => {
-      if (!info) {
-        return;
-      }
+    zip(this.http.get('assets/tmp/city.json'), this.userInfo$).subscribe(([city, info]) => {
+      this.city = city;
       this.user = info;
+      this.formData = info;
+      if (info.area) {
+        this.formData.area = (info.area as string).split(',');
+      }
+
       this.uid = info._id;
       this.userLoading = false;
+      this.schema = {
+        properties: {
+          name: {
+            type: 'string',
+            title: '用户名',
+          },
+          nickName: {
+            type: 'string',
+            title: '昵称',
+          },
+          email: {
+            type: 'string',
+            title: '邮箱',
+          },
+          phone: {
+            type: 'string',
+            title: '电话',
+          },
+          area: {
+            type: 'number',
+            title: '地区',
+            enum: this.city,
+            ui: {
+              widget: 'cascader',
+              valueProperty: 'code',
+              labelProperty: 'name',
+              changeOnSelect: true,
+            },
+          },
+        },
+      };
       this.cdr.detectChanges();
     });
+
+    // this.userInfo$.subscribe((info: ProAccountSettingsUser) => {
+    //   if (!info) {
+    //     return;
+    //   }
+    //   this.user = info;
+    //   this.uid = info._id;
+    //   this.userLoading = false;
+    //   this.cdr.detectChanges();
+    // });
     // zip(this.http.get('/user/current'), this.http.get('/geo/province')).subscribe(
     //   ([user, province]: [ProAccountSettingsUser, ProAccountSettingsCity[]]) => {
     //     this.userLoading = false;
@@ -112,13 +164,13 @@ export class ProAccountSettingsBaseComponent implements OnInit {
 
   // #endregion
 
-  save(): boolean {
-    // this.msg.success(JSON.stringify(this.user));
-    delete this.user.createdAt;
-    delete this.user.updatedAt;
-    delete this.user.password;
-    delete this.user._id;
-    this.http.put(`api/user/list/${this.uid}`, this.user).subscribe((res) => {
+  save(value: User): boolean {
+    delete value.createdAt;
+    delete value.updatedAt;
+    delete value.password;
+    delete value._id;
+    value.area = (value.area as []).join(',');
+    this.http.put(`api/user/list/${this.uid}`, value).subscribe((res) => {
       this.msg.success(res.msg);
       this.store$.dispatch(new Edit(res.data));
     });

@@ -38,13 +38,15 @@ export class VideoListComponent implements OnInit, OnDestroy {
     if ((window.navigator as any).mediaDevices && (window.navigator as any).mediaDevices.getUserMedia) {
       (window.navigator as any).mediaDevices
         .getUserMedia({
-          video: true,
-          audio: true,
+          video: { width: 500, height: 375 },
+          audio: false,
         })
         .then((stream) => {
           this.mediaStreamTrack = typeof stream.stop === 'function' ? stream : stream.getTracks()[1];
           this.videoEl.srcObject = stream;
-          this.videoEl.play();
+          this.videoEl.onloadedmetadata = (e) => {
+            this.videoEl.play();
+          };
         })
         .catch((err) => {
           console.log(err);
@@ -70,8 +72,6 @@ export class VideoListComponent implements OnInit, OnDestroy {
   }
   // 拍照
   proCapture(): void {
-    console.log(this.videoEl);
-
     this.context.drawImage(this.videoEl, 0, 0, 300, 170);
   }
 

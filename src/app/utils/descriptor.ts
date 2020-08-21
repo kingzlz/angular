@@ -27,3 +27,20 @@ export const debounceFn = function (wait, options = {}) {
     descriptor.value = debounce(descriptor.value, wait, options);
   };
 };
+
+// export function confirm(message = '确定要删除数据，此操作不可回退。', title = '提示', cancelFn = function () {}) {
+//   return function (target, name, descriptor) {
+//     const originFn = descriptor.value;
+//     descriptor.value = async function (...rest) {
+//       try {
+//         await Dialog.confirm({
+//           message,
+//           title,
+//         });
+//         originFn.apply(this, rest);
+//       } catch (error) {
+//         cancelFn && cancelFn(error);
+//       }
+//     };
+//   };
+// }
