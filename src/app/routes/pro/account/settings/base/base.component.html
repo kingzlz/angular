@@ -1,7 +1,7 @@
 <nz-spin [nzSpinning]="userLoading">
   <div class="main" *ngIf="user">
     <div class="left">
-      <sf [schema]="schema" (formSubmit)="save($event)" [ui]="ui" [formData]="formData"></sf>
+      <sf #sf [schema]="schema" (formSubmit)="save($event)" [ui]="ui" [formData]="formData"></sf>
       <!-- <form nz-form nzLayout="vertical" #f="ngForm" (submit)="save()" se-container="1">
         <se label="用户名" error="请输入您的用户名!">
           <input nz-input [(ngModel)]="user.name" name="name" required />

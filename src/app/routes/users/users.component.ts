@@ -22,6 +22,12 @@ export class UsersComponent implements OnInit {
       index: 'name',
     },
     {
+      title: '头像',
+      index: 'avatar',
+      type: 'img',
+      width: '200px',
+    },
+    {
       title: '密码',
       index: 'password',
       format: () => '******',

@@ -1,6 +1,7 @@
-import { ChangeDetectionStrategy, ChangeDetectorRef, Component, Inject, Injector, OnInit } from '@angular/core';
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component, Inject, Injector, OnInit, ViewChild } from '@angular/core';
 import { SFCascaderWidgetSchema, SFSchema } from '@delon/form';
-import { _HttpClient } from '@delon/theme';
+import { SFComponent } from '@delon/form/';
+import { SettingsService, _HttpClient } from '@delon/theme';
 import { deepCopy } from '@delon/util';
 import { Select, Store } from '@ngxs/store';
 import { NzMessageService } from 'ng-zorro-antd/message';
@@ -49,6 +50,7 @@ export class ProAccountSettingsBaseComponent implements OnInit {
     private http: _HttpClient,
     private cdr: ChangeDetectorRef,
     private msg: NzMessageService,
+    private settingservice: SettingsService,
     private store$: Store,
     @Inject(Injector) public readonly injector: Injector,
   ) {}
@@ -66,6 +68,7 @@ export class ProAccountSettingsBaseComponent implements OnInit {
       // grid: { span: 8 },
     },
   };
+  @ViewChild('sf', { static: false }) sf: SFComponent;
   @Select(UserState.getLoginUser) userInfo$: Observable<User>;
   provinces: ProAccountSettingsCity[] = [];
   cities: ProAccountSettingsCity[] = [];
@@ -174,6 +177,7 @@ export class ProAccountSettingsBaseComponent implements OnInit {
     value.area = (value.area as []).join(',');
     this.http.put(`api/user/list/${this.uid}`, value).subscribe((res) => {
       this.msg.success(res.msg);
+      this.settingservice.setUser(res.data);
       this.store$.dispatch(new Edit(res.data));
     });
     return false;
@@ -183,7 +187,7 @@ export class ProAccountSettingsBaseComponent implements OnInit {
     if (args.type !== 'success') {
       return;
     }
-
+    this.sf.value.avatar = args.file.response.url;
     this.user.avatar = args.file.response.url;
   }
 }
