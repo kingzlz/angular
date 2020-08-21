@@ -1,6 +1,7 @@
 import { ChangeDetectionStrategy, ChangeDetectorRef, Component, Inject, Injector, OnInit } from '@angular/core';
 import { SFCascaderWidgetSchema, SFSchema } from '@delon/form';
 import { _HttpClient } from '@delon/theme';
+import { deepCopy } from '@delon/util';
 import { Select, Store } from '@ngxs/store';
 import { NzMessageService } from 'ng-zorro-antd/message';
 import { NzModalService } from 'ng-zorro-antd/modal';
@@ -9,6 +10,7 @@ import { forkJoin, Observable, zip } from 'rxjs';
 import { User } from 'src/app/store/models/user.model';
 import { UserState } from 'src/app/store/states/user.state';
 import { Edit } from '../../../../../store/actions/user.action';
+
 interface ProAccountSettingsUser {
   _id: string;
   email: string;
@@ -164,6 +166,7 @@ export class ProAccountSettingsBaseComponent implements OnInit {
   // #endregion
 
   save(value: User): boolean {
+    value = deepCopy(value);
     delete value.createdAt;
     delete value.updatedAt;
     delete value.password;

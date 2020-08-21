@@ -24,6 +24,9 @@ export const throttleFn = function (wait, options = {}) {
  */
 export const debounceFn = function (wait, options = {}) {
   return function (target, name, descriptor) {
+    const _this = target.constructor;
+    console.log(_this, new _this());
+
     descriptor.value = debounce(descriptor.value, wait, options);
   };
 };

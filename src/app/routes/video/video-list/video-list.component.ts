@@ -42,7 +42,7 @@ export class VideoListComponent implements OnInit, OnDestroy {
           audio: false,
         })
         .then((stream) => {
-          this.mediaStreamTrack = typeof stream.stop === 'function' ? stream : stream.getTracks()[1];
+          this.mediaStreamTrack = typeof stream.stop === 'function' ? stream : stream.getTracks()[0];
           this.videoEl.srcObject = stream;
           this.videoEl.onloadedmetadata = (e) => {
             this.videoEl.play();

@@ -1,5 +1,5 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { STColumn, STComponent, STPage, STReq, STRes } from '@delon/abc/st';
+import { STColumn, STComponent, STPage } from '@delon/abc/st';
 import { ModalHelper, _HttpClient } from '@delon/theme';
 import { debounceFn } from '@utils';
 import { NzModalService } from 'ng-zorro-antd/modal';
@@ -15,10 +15,6 @@ export class FilesComponent implements OnInit {
     toTop: false,
   };
   data: any[];
-  reqConfig: STReq = {
-    reName: { pi: 'page', ps: 'limit' },
-  };
-  resConfig: STRes = { reName: { total: 'meta.pagination.total', list: 'data' } };
   columns: STColumn[] = [
     {
       title: '文件名称',
@@ -56,7 +52,7 @@ export class FilesComponent implements OnInit {
   imageIndexOne = 0;
   /** internal */
   @ViewChild('st', { static: true }) st: STComponent;
-  constructor(private modelService: ModalHelper, private http: _HttpClient, private modal: NzModalService) {}
+  constructor(public modelService: ModalHelper, private http: _HttpClient, private modal: NzModalService) {}
 
   ngOnInit(): void {}
   upload(): void {
