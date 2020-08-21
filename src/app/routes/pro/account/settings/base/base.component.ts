@@ -41,7 +41,6 @@ interface ProAccountSettingsCity {
   selector: 'app-account-settings-base',
   templateUrl: './base.component.html',
   styleUrls: ['./base.component.less'],
-  changeDetection: ChangeDetectionStrategy.Default,
 })
 export class ProAccountSettingsBaseComponent implements OnInit {
   constructor(
@@ -92,7 +91,7 @@ export class ProAccountSettingsBaseComponent implements OnInit {
       this.city = city;
       this.user = info;
       this.formData = info;
-      if (info.area) {
+      if (info.area && typeof info.area === 'string') {
         this.formData.area = (info.area as string).split(',');
       }
 
