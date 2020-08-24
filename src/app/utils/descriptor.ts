@@ -1,5 +1,14 @@
+import { Inject, Injectable, Injector } from '@angular/core';
 import { debounce, throttle } from 'lodash';
+import { NzSafeAny } from 'ng-zorro-antd/core/types';
 import { NzModalService } from 'ng-zorro-antd/modal';
+import { Observable } from 'rxjs';
+
+@Injectable()
+export abstract class BaseDescriptor {
+  constructor(@Inject(Injector) public injector: Injector) {}
+}
+
 /**
  * 函数节流装饰器
  * @param {number} wait 节流的毫秒
@@ -31,19 +40,32 @@ export const debounceFn = function (wait, options = {}) {
   };
 };
 
-// export function confirm(message = '确定要删除数据，此操作不可回退。', title = '提示', cancelFn = function () {}) {
-//   return function (target, name, descriptor) {
-//     const originFn = descriptor.value;
-//     descriptor.value = async function (...rest) {
-//       try {
-//         await Dialog.confirm({
-//           message,
-//           title,
-//         });
-//         originFn.apply(this, rest);
-//       } catch (error) {
-//         cancelFn && cancelFn(error);
-//       }
-//     };
-//   };
-// }
+export function confirmFn(message = '确定要删除数据，此操作不可回退。', title = '提示', cancelFn = function (error) {}) {
+  // tslint:disable-next-line: only-arrow-functions
+  // tslint:disable-next-line: typedef
+  return function (_target: BaseDescriptor, targetKey?: string, descriptor?: PropertyDescriptor) {
+    const originFn = descriptor.value;
+
+    // tslint:disable-next-line: typedef
+    descriptor.value = function (...args: any) {
+      console.log('args', args);
+
+      const injector = (this as NzSafeAny).injector as Injector;
+      const model = injector.get(NzModalService, null) as NzModalService;
+      if (model == null) {
+        throw new TypeError(`Not found '_HttpClient', You can import 'AlainThemeModule' && 'HttpClientModule' in your root module.`);
+      }
+      try {
+        model.confirm({
+          nzTitle: title,
+          nzContent: message,
+          nzOnOk: () => originFn.apply(this, args),
+        });
+      } catch (error) {
+        if (cancelFn) {
+          cancelFn(error);
+        }
+      }
+    };
+  };
+}

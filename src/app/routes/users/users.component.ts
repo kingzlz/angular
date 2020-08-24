@@ -1,6 +1,8 @@
+import { Inject, Injector } from '@angular/core';
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { STColumn, STComponent, STPage, STReq, STRes } from '@delon/abc/st';
-
+import { confirmFn } from '@utils';
+import { NzModalService } from 'ng-zorro-antd/modal';
 @Component({
   selector: 'app-users',
   templateUrl: './users.component.html',
@@ -48,7 +50,8 @@ export class UsersComponent implements OnInit {
       buttons: [
         {
           text: '查看',
-          type: 'link',
+          click: (item) => this.view(item),
+          // type: 'link',
           // click: (item: any) => `payment/funder/view/${item.id}/${item.payNo}`,
         },
         // { text: '修改', click: (item: any) => `/platform/edit/${item.id}` },
@@ -58,7 +61,12 @@ export class UsersComponent implements OnInit {
 
   /** internal */
   @ViewChild('st', { static: true }) st: STComponent;
-  constructor() {}
+  constructor(@Inject(Injector) public injector: Injector, public model: NzModalService) {}
 
   ngOnInit(): void {}
+
+  @confirmFn('哈哈')
+  view(item: any): void {
+    console.log(item);
+  }
 }
