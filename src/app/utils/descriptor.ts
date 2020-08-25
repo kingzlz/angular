@@ -53,7 +53,7 @@ export function confirmFn(message = '确定要删除数据，此操作不可回�
       const injector = (this as NzSafeAny).injector as Injector;
       const model = injector.get(NzModalService, null) as NzModalService;
       if (model == null) {
-        throw new TypeError(`Not found '_HttpClient', You can import 'AlainThemeModule' && 'HttpClientModule' in your root module.`);
+        throw new TypeError(`Not found 'NzModalService', `);
       }
       try {
         model.confirm({

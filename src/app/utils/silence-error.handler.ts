@@ -61,3 +61,14 @@ export class SilenceErrorHandler extends ErrorHandler {
     }
   }
 }
+
+// 多维数组转一维数组
+export const deepFlat = (arr: []) => [].concat(...arr.map((v) => (Array.isArray(v) ? deepFlat(v) : v)));
+
+// 获取数组交集(简单一维数组等)
+export const similarity = (arr: any[], values: any[]) => arr.filter((v) => values.includes(v));
+
+// 是否是闰年
+export function leapYear(year: number): boolean {
+  return !(year % (year % 100 ? 4 : 400));
+}
