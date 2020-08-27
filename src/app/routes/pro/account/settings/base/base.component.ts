@@ -1,9 +1,10 @@
-import { ChangeDetectionStrategy, ChangeDetectorRef, Component, Inject, Injector, OnInit, ViewChild } from '@angular/core';
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component, Inject, Injector, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { SFCascaderWidgetSchema, SFSchema } from '@delon/form';
 import { SFComponent } from '@delon/form/';
 import { SettingsService, _HttpClient } from '@delon/theme';
 import { deepCopy } from '@delon/util';
 import { Select, Store } from '@ngxs/store';
+import { AutoUnsubscribe } from '@utils';
 import { NzMessageService } from 'ng-zorro-antd/message';
 import { NzModalService } from 'ng-zorro-antd/modal';
 import { NzUploadChangeParam, NzUploadFile } from 'ng-zorro-antd/upload';
@@ -45,7 +46,8 @@ interface ProAccountSettingsCity {
   templateUrl: './base.component.html',
   styleUrls: ['./base.component.less'],
 })
-export class ProAccountSettingsBaseComponent implements OnInit {
+@AutoUnsubscribe()
+export class ProAccountSettingsBaseComponent implements OnInit, OnDestroy {
   constructor(
     private http: _HttpClient,
     private cdr: ChangeDetectorRef,
@@ -90,6 +92,7 @@ export class ProAccountSettingsBaseComponent implements OnInit {
       nzFooter: null,
     });
   };
+  ngOnDestroy(): void {}
 
   ngOnInit(): void {
     zip(this.http.get('assets/tmp/city.json'), this.userInfo$).subscribe(([city, info]) => {

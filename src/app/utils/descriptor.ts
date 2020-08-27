@@ -69,3 +69,24 @@ export function confirmFn(message = '确定要删除数据，此操作不可回�
     };
   };
 }
+
+// tslint:disable-next-line: typedef
+export function AutoUnsubscribe(blackList = []) {
+  // tslint:disable-next-line: typedef
+  return function (constructor) {
+    const original = constructor.prototype.ngOnDestroy;
+    constructor.prototype.ngOnDestroy = function () {
+      // tslint:disable-next-line: forin
+      for (const prop in this) {
+        const property = this[prop];
+        if (!blackList.includes(prop)) {
+          if (property && typeof property.unsubscribe === 'function') {
+            property.unsubscribe();
+          }
+        }
+      }
+      // tslint:disable-next-line: no-unused-expression
+      original && typeof original === 'function' && original.apply(this, arguments);
+    };
+  };
+}
