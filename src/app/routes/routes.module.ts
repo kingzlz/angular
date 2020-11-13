@@ -7,6 +7,7 @@ import { DashboardMonitorComponent } from './dashboard/monitor/monitor.component
 // dashboard pages
 import { DashboardV1Component } from './dashboard/v1/v1.component';
 import { DashboardWorkplaceComponent } from './dashboard/workplace/workplace.component';
+import { LockDialogComponent } from './passport/lock-dialog/lock-dialog.component';
 // single pages
 import { UserLockComponent } from './passport/lock/lock.component';
 // passport pages
@@ -28,11 +29,13 @@ const COMPONENTS = [
   UserLockComponent,
   CallbackComponent,
 ];
-const COMPONENTS_NOROUNT = [];
+const COMPONENTS_NOROUNT = [
+  LockDialogComponent
+];
 
 @NgModule({
   imports: [SharedModule, RouteRoutingModule],
   declarations: [...COMPONENTS, ...COMPONENTS_NOROUNT],
   entryComponents: COMPONENTS_NOROUNT,
 })
-export class RoutesModule {}
+export class RoutesModule { }

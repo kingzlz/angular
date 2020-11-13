@@ -30,7 +30,7 @@ const routes: Routes = [
       { path: '', redirectTo: 'index', pathMatch: 'full' },
       { path: 'index', component: PageIndexComponent },
       // { path: '', redirectTo: 'dashboard/v1', pathMatch: 'full' },
-      // { path: 'dashboard', redirectTo: 'dashboard/v1', pathMatch: 'full' },
+      { path: 'dashboard', redirectTo: 'dashboard/v1', pathMatch: 'full' },
       { path: 'dashboard/v1', component: DashboardV1Component },
       { path: 'dashboard/analysis', component: DashboardAnalysisComponent },
       { path: 'dashboard/monitor', component: DashboardMonitorComponent },
@@ -100,4 +100,4 @@ const routes: Routes = [
   ],
   exports: [RouterModule],
 })
-export class RouteRoutingModule {}
+export class RouteRoutingModule { }

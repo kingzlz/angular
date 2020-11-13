@@ -1,5 +1,6 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core';
-import { App, SettingsService } from '@delon/theme';
+import { App, ModalHelper, SettingsService } from '@delon/theme';
+import { LockDialogComponent } from '../../../routes/passport/lock-dialog/lock-dialog.component';
 
 @Component({
   selector: 'layout-header',
@@ -17,7 +18,7 @@ export class HeaderComponent {
     return this.settings.layout.collapsed;
   }
 
-  constructor(private settings: SettingsService) {}
+  constructor(private settings: SettingsService, private model: ModalHelper) { }
 
   toggleCollapsedSidebar(): void {
     this.settings.setLayout('collapsed', !this.settings.layout.collapsed);
@@ -25,5 +26,9 @@ export class HeaderComponent {
 
   searchToggleChange(): void {
     this.searchToggleStatus = !this.searchToggleStatus;
+  }
+
+  openLock(): void {
+    this.model.createStatic(LockDialogComponent).subscribe();
   }
 }

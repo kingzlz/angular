@@ -1,6 +1,6 @@
 {
   "/api/": {
-    "target": "http://172.16.41.147:7001",
+    "target": "http://172.16.42.240:7001",
     "secure": false,
     "changeOrigin": true,
     "pathRewrite": {
@@ -8,7 +8,7 @@
     }
   },
   "/public/": {
-    "target": "http://172.16.41.147:7001",
+    "target": "http://172.16.42.240:7001",
     "secure": false,
     "changeOrigin": true
   }

@@ -5,11 +5,11 @@ import { DA_SERVICE_TOKEN, ITokenService } from '@delon/auth';
 import { SettingsService, User } from '@delon/theme';
 
 @Component({
-  selector: 'passport-lock',
-  templateUrl: './lock.component.html',
-  styleUrls: ['./lock.component.less'],
+  selector: 'app-lock-dialog',
+  templateUrl: './lock-dialog.component.html',
+  styleUrls: ['./lock-dialog.component.less'],
 })
-export class UserLockComponent {
+export class LockDialogComponent {
   f: FormGroup;
 
   get user(): User {
