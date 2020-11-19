@@ -5,7 +5,7 @@
   "author": "ziven <kingzlz@qq.com>",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/ng-alain/ng-alain.git"
+    "url": "https://github.com/kingzlz/angular.git"
   },
   "bugs": {
     "url": "https://github.com/ng-alain/ng-alain/issues"
@@ -36,7 +36,9 @@
     "test-coverage": "ng test --code-coverage --watch=false",
     "color-less": "node scripts/color-less.js",
     "theme": "node scripts/theme.js",
-    "icon": "ng g ng-alain:plugin icon"
+    "icon": "ng g ng-alain:plugin icon",
+    "standard-version": "standard-version --skip.tag",
+    "release": "node ./scripts/release/release.js"
   },
   "dependencies": {
     "@angular/animations": "~10.0.4",
@@ -122,6 +124,8 @@
     "tslint-config-prettier": "^1.18.0",
     "typescript": "~3.9.5",
     "webpack-bundle-analyzer": "^3.6.1",
+    "inquirer": "^7.3.3",
+    "standard-version": "9.0.0",
     "xlsx": "^0.16.4"
   },
   "husky": {
