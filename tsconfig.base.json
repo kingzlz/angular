@@ -23,7 +23,10 @@
         "src/app/utils/*/index.ts",
         "src/app/utils/*"
       ],
-    }
+    },
+    "plugins": [
+      { "name": "typescript-tslint-plugin" }
+    ]
   },
   "angularCompilerOptions": {
     "fullTemplateTypeCheck": true,

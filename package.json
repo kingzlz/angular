@@ -96,6 +96,7 @@
     "codelyzer": "^6.0.0",
     "gh-pages": "^2.2.0",
     "husky": "^4.2.3",
+    "inquirer": "^7.3.3",
     "jasmine-core": "~3.5.0",
     "jasmine-spec-reporter": "~5.0.0",
     "karma": "~5.0.0",
@@ -113,6 +114,7 @@
     "prettier": "^2.0.5",
     "pretty-quick": "^2.0.1",
     "protractor": "~7.0.0",
+    "standard-version": "9.0.0",
     "stylelint": "^13.3.1",
     "stylelint-config-prettier": "^8.0.1",
     "stylelint-config-rational-order": "^0.1.2",
@@ -123,9 +125,8 @@
     "tslint": "~6.1.0",
     "tslint-config-prettier": "^1.18.0",
     "typescript": "~3.9.5",
+    "typescript-tslint-plugin": "^1.0.0",
     "webpack-bundle-analyzer": "^3.6.1",
-    "inquirer": "^7.3.3",
-    "standard-version": "9.0.0",
     "xlsx": "^0.16.4"
   },
   "husky": {
