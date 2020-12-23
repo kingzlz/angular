@@ -14,6 +14,10 @@ const alainConfig: AlainConfig = {
     modal: { size: 'lg' },
     req: { reName: { pi: 'page', ps: 'limit' } },
     res: { reName: { total: 'meta.pagination.total', list: 'data' } },
+    page: {
+      toTop: false,
+      show: true,
+    },
   },
   pageHeader: { homeI18n: '首页' },
   lodop: {
