@@ -39,24 +39,8 @@ English | [简体中文](README-zh_CN.md)
 + Simple upgrade
 + Support Docker deploy
 
-## Architecture
-
-![Architecture](https://raw.githubusercontent.com/ng-alain/delon/master/_screenshot/architecture.png)
-
-> [delon](https://github.com/ng-alain/delon) is a production-ready solution for admin business components packages, Built on the design principles developed by Ant Design.
 
 
-
-## Donation
-
-ng-alain is an MIT-licensed open source project. In order to achieve better and sustainable development of the project, we expect to gain more backers. You can support us in any of the following ways:
-
-- [patreon](https://www.patreon.com/cipchk)
-- [opencollective](https://opencollective.com/ng-alain)
-- [paypal](https://www.paypal.me/cipchk)
-- [支付宝或微信](https://ng-alain.com/assets/donate.png)
-
-Or purchasing our [business theme](https://e.ng-alain.com/).
 
 #### 拍照上传时
 前端将base64格式传给后台,后台用node.js Buffer.from转为流存为图片
