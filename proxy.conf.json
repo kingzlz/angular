@@ -7,6 +7,11 @@
       "/api/": "/"
     }
   },
+  "/graphql/": {
+    "target": "https://48p1r2roz4.sse.codesandbox.io",
+    "secure": false,
+    "changeOrigin": true
+  },
   "/public/": {
     "target": "http://172.16.42.240:7001",
     "secure": false,

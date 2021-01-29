@@ -11,23 +11,38 @@
     "moduleResolution": "node",
     "importHelpers": true,
     "target": "es2015",
-    "lib": ["es2018", "dom"],
+    "lib": [
+      "es2018",
+      "dom",
+      "esnext.asynciterable"
+    ],
     "paths": {
-      "@shared": ["src/app/shared/index"],
-      "@shared/*": ["src/app/shared/*"],
-      "@core": ["src/app/core/index"],
-      "@env/*": ["src/environments/*"],
+      "@shared": [
+        "src/app/shared/index"
+      ],
+      "@shared/*": [
+        "src/app/shared/*"
+      ],
+      "@core": [
+        "src/app/core/index"
+      ],
+      "@env/*": [
+        "src/environments/*"
+      ],
       "@utils": [
         "src/app/utils"
       ],
       "@utils/*": [
         "src/app/utils/*/index.ts",
         "src/app/utils/*"
-      ],
+      ]
     },
     "plugins": [
-      { "name": "typescript-tslint-plugin" }
-    ]
+      {
+        "name": "typescript-tslint-plugin"
+      }
+    ],
+    "allowSyntheticDefaultImports": true
   },
   "angularCompilerOptions": {
     "fullTemplateTypeCheck": true,

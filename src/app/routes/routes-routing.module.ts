@@ -47,6 +47,7 @@ const routes: Routes = [
       { path: 'user', loadChildren: () => import('./users/users.module').then((m) => m.UsersModule) },
       { path: 'video', loadChildren: () => import('./video/video.module').then((m) => m.VideoModule) },
       { path: 'file', loadChildren: () => import('./files/files.module').then((m) => m.FilesModule) },
+      { path: 'graphQl', loadChildren: () => import('./graph-ql/graph-ql.module').then((m) => m.GraphQlModule) },
       // Exception
       { path: 'exception', loadChildren: () => import('./exception/exception.module').then((m) => m.ExceptionModule) },
     ],
@@ -100,4 +101,4 @@ const routes: Routes = [
   ],
   exports: [RouterModule],
 })
-export class RouteRoutingModule { }
+export class RouteRoutingModule {}

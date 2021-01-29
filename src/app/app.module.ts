@@ -90,17 +90,18 @@ const APPINIT_PROVIDES = [
 ];
 // #endregion
 
+import { ServiceWorkerModule } from '@angular/service-worker';
+import { environment } from '../environments/environment';
 import { AppComponent } from './app.component';
 import { CoreModule } from './core/core.module';
 import { GlobalConfigModule } from './global-config.module';
+import { GraphQLModule } from './graphql.module';
 import { LayoutModule } from './layout/layout.module';
 import { PageIndexComponent } from './routes/page-index/page-index.component';
 import { RoutesModule } from './routes/routes.module';
 import { SharedModule } from './shared/shared.module';
 import { STWidgetModule } from './shared/st-widget/st-widget.module';
 import { StoreModule } from './store/store.module';
-import { ServiceWorkerModule } from '@angular/service-worker';
-import { environment } from '../environments/environment';
 
 @NgModule({
   declarations: [AppComponent, PageIndexComponent],
@@ -119,6 +120,7 @@ import { environment } from '../environments/environment';
     ...GLOBAL_THIRD_MODULES,
     ...FORM_MODULES,
     ServiceWorkerModule.register('ngsw-worker.js', { enabled: environment.production }),
+    GraphQLModule,
   ],
   providers: [...LANG_PROVIDES, ...INTERCEPTOR_PROVIDES, ...I18NSERVICE_PROVIDES, ...APPINIT_PROVIDES],
   bootstrap: [AppComponent],

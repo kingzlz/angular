@@ -62,7 +62,7 @@ export class DefaultInterceptor implements HttpInterceptor {
   }
 
   private checkStatus(ev: HttpResponseBase): void {
-    if ((ev.status >= 200 && ev.status < 300) || ev.status === 401) {
+    if ((ev.status >= 200 && ev.status < 300) || ev.status === 401 || ev.status === 304) {
       return;
     }
 
@@ -190,6 +190,8 @@ export class DefaultInterceptor implements HttpInterceptor {
         //     return of(ev);
         //   }
         // }
+        break;
+      case 304:
         break;
       case 401:
         if (this.refreshTokenType === 're-request') {
